@@ -4,6 +4,7 @@ import { getCardData, shuffle } from '../helper'
 import ReactCardFlip from 'react-card-flip'
 import ModalNewRound from '../components/ModalNewRound'
 import useSound from 'use-sound'
+import confetti from 'canvas-confetti'
 
 const cards = [
     // {
@@ -50,7 +51,7 @@ const roundData = [
 
 const Games = () => {
     const [flippedCards, setFlippedCards] = useState([])
-    const [round, setRound] = useState(1)
+    const [round, setRound] = useState(5)
     const [cardList, setCardList] = useState([])
     const [isModalNextRound, setIsModalNextRound] = useState(false)
     const [playOn] = useSound('/assets/sound/pop-up-on.mp3')
@@ -110,15 +111,18 @@ const Games = () => {
             if (isNotGameEnd) {
                 setRound(newRound)
                 setFlippedCards([])
-            }
-            setIsModalNextRound(true)
-            setTimeout(() => {
-                if (isNotGameEnd) {
+                setIsModalNextRound(true)
+                setTimeout(() => {
                     playCorrect()
-                } else {
-                    playCongrat()
-                }
-            }, 300)
+                }, 300)
+            } else {
+                playCongrat()
+                confetti({
+                    particleCount: 100,
+                    spread: 70,
+                    origin: {y: 0.6}
+                })
+            }
         } else {
             playOff()
         }
