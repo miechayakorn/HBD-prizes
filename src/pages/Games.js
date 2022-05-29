@@ -51,7 +51,7 @@ const roundData = [
 
 const Games = () => {
     const [flippedCards, setFlippedCards] = useState([])
-    const [round, setRound] = useState(5)
+    const [round, setRound] = useState(1)
     const [cardList, setCardList] = useState([])
     const [isModalNextRound, setIsModalNextRound] = useState(false)
     const [playOn] = useSound('/assets/sound/pop-up-on.mp3')
