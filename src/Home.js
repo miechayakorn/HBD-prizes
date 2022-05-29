@@ -4,7 +4,7 @@ import { Card, Container, Grid, Row, Text } from '@nextui-org/react'
 const Home = () => {
 
     return (
-        <>
+        <Container>
             <Row>
                 <Grid.Container gap={2} justify="center">
                     <Grid xs={4}>
@@ -36,7 +36,7 @@ const Home = () => {
                     </Grid>
                 </Grid.Container>
             </Row>
-        </>
+        </Container>
     )
 }
 

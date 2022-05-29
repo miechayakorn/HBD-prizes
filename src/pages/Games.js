@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Card, Grid, Row, Text } from '@nextui-org/react'
+import { Card, Container, Grid, Text } from '@nextui-org/react'
 import { getCardData, shuffle } from '../helper'
 import ReactCardFlip from 'react-card-flip'
 import ModalNewRound from '../components/ModalNewRound'
@@ -118,19 +118,17 @@ const Games = () => {
     }, [round])
 
     return (
-        <>
-            <Row>
-                <Grid.Container gap={2} justify="center">
-                    <Grid xs={4}>
-                        <Card color="gradient">
-                            <Text align="center" h6 size={15} color="white">
-                                {round} of {roundData.length}
-                            </Text>
-                        </Card>
-                    </Grid>
-                </Grid.Container>
-            </Row>
-            <Grid.Container gap={2} justify="flex-start">
+        <Container>
+            <Grid.Container gap={2} justify="center">
+                <Grid xs={4}>
+                    <Card color="gradient">
+                        <Text align="center" h6 size={15} color="white">
+                            {round} of {roundData.length}
+                        </Text>
+                    </Card>
+                </Grid>
+            </Grid.Container>
+            <Grid.Container gap={2}>
                 {cardList.map((item, index) => (
                     <Grid xs={roundData[round - 1].gridSize} lg={roundData[round - 1].gridSize} key={index}>
                         <ReactCardFlip containerStyle={{width: '100%'}} isFlipped={item.flipped}
@@ -163,7 +161,7 @@ const Games = () => {
                 ))}
             </Grid.Container>
             <ModalNewRound visible={isModalNextRound} setVisible={setIsModalNextRound}/>
-        </>
+        </Container>
     )
 }
 
