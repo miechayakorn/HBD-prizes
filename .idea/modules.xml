@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/hbd-prizes.iml" filepath="$PROJECT_DIR$/.idea/hbd-prizes.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/mie-arcade.iml" filepath="$PROJECT_DIR$/.idea/mie-arcade.iml" />
     </modules>
   </component>
 </project>
