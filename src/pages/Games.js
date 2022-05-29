@@ -3,6 +3,7 @@ import { Card, Container, Grid, Text } from '@nextui-org/react'
 import { getCardData, shuffle } from '../helper'
 import ReactCardFlip from 'react-card-flip'
 import ModalNewRound from '../components/ModalNewRound'
+import confetti from 'canvas-confetti'
 
 const cards = [
     // {
@@ -107,14 +108,22 @@ const Games = () => {
     }
 
     useEffect(() => {
-        setCardList(shuffle(getCardData(cards, roundData[round - 1].imgSize)).map((card, index) => {
-            return {
-                id: index,
-                ...card,
-                flipped: false,
-                matched: false
-            }
-        }))
+        if (round !== roundData.length + 1) {
+            setCardList(shuffle(getCardData(cards, roundData[round - 1].imgSize)).map((card, index) => {
+                return {
+                    id: index,
+                    ...card,
+                    flipped: false,
+                    matched: false
+                }
+            }))
+        } else {
+            confetti({
+                particleCount: 100,
+                spread: 70,
+                origin: {y: 0.6}
+            })
+        }
     }, [round])
 
     return (

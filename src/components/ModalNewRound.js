@@ -10,14 +10,13 @@ const ModalNewRound = ({visible, setVisible}) => {
     return (
         <Modal
             width={'80%'}
-            blur
             aria-labelledby="modal-title"
             open={visible}
             preventClose
             onClose={closeHandler}
         >
             <Modal.Header>
-                <Text h3 id="modal-title" >
+                <Text h3 id="modal-title">
                     Congratulations 🎉
                 </Text>
             </Modal.Header>
