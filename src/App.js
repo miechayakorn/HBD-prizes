@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Redirect, Route, Switch, useLocation } from 'r
 import Home from './Home'
 import Login from './pages/Login'
 import Games from './pages/Games'
+import Congrat from './pages/Congrat'
 
 const App = () => {
     const AuthRoute = ({path, component: Component, ...props}) => {
@@ -36,6 +37,10 @@ const App = () => {
                 <AuthRoute
                     path="/games"
                     component={Games}
+                />
+                <AuthRoute
+                    path="/congrat"
+                    component={Congrat}
                 />
                 <Route exact path="/" render={props => <Home {...props} />}/>
                 <Route exact path="/login" render={props => <Login {...props} />}/>

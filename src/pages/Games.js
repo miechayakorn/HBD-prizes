@@ -3,7 +3,7 @@ import { Card, Container, Grid, Text } from '@nextui-org/react'
 import { getCardData, shuffle } from '../helper'
 import ReactCardFlip from 'react-card-flip'
 import ModalNewRound from '../components/ModalNewRound'
-import confetti from 'canvas-confetti'
+import useSound from 'use-sound'
 
 const cards = [
     // {
@@ -53,8 +53,13 @@ const Games = () => {
     const [round, setRound] = useState(1)
     const [cardList, setCardList] = useState([])
     const [isModalNextRound, setIsModalNextRound] = useState(false)
+    const [playOn] = useSound('/assets/sound/pop-up-on.mp3')
+    const [playOff] = useSound('/assets/sound/pop-up-off.mp3')
+    const [playCorrect] = useSound('/assets/sound/correct-answer.mp3')
+    const [playCongrat] = useSound('/assets/sound/congrat.mp3')
 
     const handleClick = (name, index) => {
+        playOn()
         let currentCard = {name, index}
 
         //update card is flipped
@@ -101,9 +106,21 @@ const Games = () => {
         })
         if (done) {
             const newRound = round + 1
-            setRound(newRound)
-            setFlippedCards([])
+            const isNotGameEnd = newRound !== roundData.length + 1
+            if (isNotGameEnd) {
+                setRound(newRound)
+                setFlippedCards([])
+            }
             setIsModalNextRound(true)
+            setTimeout(() => {
+                if (isNotGameEnd) {
+                    playCorrect()
+                } else {
+                    playCongrat()
+                }
+            }, 300)
+        } else {
+            playOff()
         }
     }
 
@@ -117,12 +134,6 @@ const Games = () => {
                     matched: false
                 }
             }))
-        } else {
-            confetti({
-                particleCount: 100,
-                spread: 70,
-                origin: {y: 0.6}
-            })
         }
     }, [round])
 
@@ -142,8 +153,10 @@ const Games = () => {
                     <Grid xs={roundData[round - 1].gridSize} lg={roundData[round - 1].gridSize} key={index}>
                         <ReactCardFlip containerStyle={{width: '100%'}} isFlipped={item.flipped}
                                        flipDirection="horizontal">
-                            <Card clickable onClick={() => flippedCards.length === 2 ? () => {
-                            } : handleClick(item.name, index)}>
+                            <Card clickable
+                                  onClick={() => flippedCards.length === 2 ? () => {
+                                  } : handleClick(item.name, index)}
+                            >
                                 <Card.Body css={{p: 0}}>
                                     <Card.Image
                                         objectFit="cover"
@@ -169,7 +182,8 @@ const Games = () => {
                     </Grid>
                 ))}
             </Grid.Container>
-            <ModalNewRound visible={isModalNextRound} setVisible={setIsModalNextRound}/>
+            <ModalNewRound round={round} roundLength={roundData.length} visible={isModalNextRound}
+                           setVisible={setIsModalNextRound}/>
         </Container>
     )
 }
