@@ -164,10 +164,10 @@ const Games = () => {
                                 <Card.Body css={{p: 0}}>
                                     <Card.Image
                                         objectFit="cover"
-                                        src={'/assets/img/boxPrize.PNG'}
+                                        src={'/assets/img/boxPrize.png'}
                                         width="100%"
                                         height={140}
-                                        alt={item.name}
+                                        alt="box-prize"
                                     />
                                 </Card.Body>
                             </Card>
