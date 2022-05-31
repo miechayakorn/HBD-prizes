@@ -10,6 +10,7 @@ const Auth = () => {
         if (code) {
             fetchData()
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const fetchData = async () => {
