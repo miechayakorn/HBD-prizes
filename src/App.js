@@ -4,6 +4,7 @@ import Home from './Home'
 import Login from './pages/Login'
 import Games from './pages/Games'
 import Congrat from './pages/Congrat'
+import Auth from './pages/Auth'
 
 const App = () => {
     const AuthRoute = ({path, component: Component, ...props}) => {
@@ -43,6 +44,7 @@ const App = () => {
                     component={Congrat}
                 />
                 <Route exact path="/" render={props => <Home {...props} />}/>
+                <Route exact path="/auth" render={props => <Auth {...props} />}/>
                 <Route exact path="/login" render={props => <Login {...props} />}/>
                 <Redirect to="/"/>
             </Switch>
