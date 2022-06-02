@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
 import axios from 'axios'
+import { Container, Grid, Loading, Text } from '@nextui-org/react'
 
 const Auth = () => {
     const query = new URLSearchParams(useLocation().search)
@@ -19,13 +20,13 @@ const Auth = () => {
     }
 
     const getToken = async () => {
-        const {data} = await axios.post('https://api.instagram.com/oauth/access_token', {
-            client_id: '1158691484675995',
-            client_secret: '5bc08d49b174ce362cc352d0eb16d461',
-            grant_type: 'authorization_code',
-            code,
-            redirect_uri: 'https://arcade.miechayakorn.tk'
-        })
+        let bodyFormData = new FormData()
+        bodyFormData.append('client_id', '1158691484675995')
+        bodyFormData.append('client_secret', '5bc08d49b174ce362cc352d0eb16d461')
+        bodyFormData.append('grant_type', 'authorization_code')
+        bodyFormData.append('code', code)
+        bodyFormData.append('redirect_uri', 'https://arcade.miechayakorn.tk/auth')
+        const {data} = await axios.post('https://api.instagram.com/oauth/access_token', bodyFormData, {headers: {'Content-Type': 'multipart/form-data'}})
         return data
     }
 
@@ -36,9 +37,16 @@ const Auth = () => {
     }
 
     return (
-        <div className="text-center">
-            Welcome <p>{localStorage.getItem('username')}</p>
-        </div>
+        <Container className="App bg-ig-dot" style={{marginTop: '-60px'}}>
+            <Grid.Container gap={2}>
+                <Grid xs={12} justify="center">
+                    <Text h3>Welcome, {localStorage.getItem('username')}</Text>
+                </Grid>
+                <Grid xs={12} justify="center">
+                    <Loading color="error" size="lg"/>
+                </Grid>
+            </Grid.Container>
+        </Container>
     )
 }
 

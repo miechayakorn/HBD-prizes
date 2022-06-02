@@ -142,7 +142,7 @@ const Games = () => {
     }, [round])
 
     return (
-        <Container>
+        <Container className="App bg-dot">
             <Grid.Container gap={2} justify="center">
                 <Grid xs={4}>
                     <Card color="gradient">
