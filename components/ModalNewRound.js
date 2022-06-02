@@ -1,9 +1,8 @@
 import React from 'react'
 import { Button, Modal, Row, Text } from '@nextui-org/react'
-import { useHistory } from 'react-router-dom'
+import Router from 'next/router'
 
-const ModalNewRound = ({visible, setVisible, round, roundLength}) => {
-    const history = useHistory()
+const ModalNewRound = ({ visible, setVisible, round, roundLength }) => {
 
     const closeHandler = () => {
         setVisible(false)
@@ -30,13 +29,16 @@ const ModalNewRound = ({visible, setVisible, round, roundLength}) => {
             <Modal.Footer>
                 {round !== roundLength + 1 ? <Button auto onClick={closeHandler}>
                     Next Level
-                </Button> : <Button auto onClick={() => history.push('/congrat')}>
+                </Button> : <Button auto onClick={() =>
+                    Router.push({
+                        pathname: '/congrat',
+                        query: { name: 'Someone' }
+                    })}>
                     View Prize
                 </Button>}
             </Modal.Footer>
         </Modal>
     )
-
 }
 
 export default ModalNewRound
