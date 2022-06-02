@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Card, Container, Grid, Text } from '@nextui-org/react'
-import { getCardData, shuffle } from '../helper'
+import { getCardData, shuffle } from '../utils/helper'
 import ReactCardFlip from 'react-card-flip'
 import ModalNewRound from '../components/ModalNewRound'
 import useSound from 'use-sound'
