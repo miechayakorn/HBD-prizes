@@ -9,35 +9,35 @@ import confetti from 'canvas-confetti'
 const cards = [
     // {
     //     name: 'Orange',
-    //     img: '/images/fruit-1.jpeg',
+    //     img: '/fruit-1.jpg',
     // },
     {
         name: 'Tangerine',
-        img: '/images/fruit-2.jpeg',
+        img: '/fruit-2.jpg',
     },
     {
         name: 'Raspberry',
-        img: '/images/fruit-3.jpeg',
+        img: '/fruit-3.jpg',
     },
     {
         name: 'Lemon',
-        img: '/images/fruit-4.jpeg',
+        img: '/fruit-4.jpg',
     },
     {
         name: 'Advocato',
-        img: '/images/fruit-5.jpeg',
+        img: '/fruit-5.jpg',
     },
     {
         name: 'Lemon 2',
-        img: '/images/fruit-6.jpeg',
+        img: '/fruit-6.jpg',
     },
     {
         name: 'Banana',
-        img: '/images/fruit-7.jpeg',
+        img: '/fruit-7.jpg',
     },
     {
         name: 'Watermelon',
-        img: '/images/fruit-8.jpeg',
+        img: '/fruit-8.jpg',
     },
 ]
 
@@ -175,7 +175,7 @@ const Games = () => {
                                 <Card.Body css={{p: 0}}>
                                     <Card.Image
                                         objectFit="cover"
-                                        src={'https://nextui.org' + item.img}
+                                        src={'/assets/img' + item.img}
                                         width="100%"
                                         height={140}
                                         alt={item.name}
