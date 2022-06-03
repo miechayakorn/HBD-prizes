@@ -29,7 +29,6 @@ a {
     background-size: 24px 24px;
 }
 
-
 .App {
     max-width: 400px;
     display: flex;
@@ -53,4 +52,10 @@ a {
 .main {
     padding: 16px;
     margin-top: 50px;
+}
+
+.text-banner-y {
+    transform: skewY(-3deg);
+    color: #564a5f;
+    text-shadow: #bfbaff 4px 4px, #ffdef7 8px 8px;
 }

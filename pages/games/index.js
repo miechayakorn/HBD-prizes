@@ -1,42 +1,12 @@
-import { useEffect, useState } from 'react'
-import { Avatar, Button, Grid, Table, Text, User } from '@nextui-org/react'
+import { Button, Grid, Table, Text } from '@nextui-org/react'
 import styles from '../../styles/Home.module.css'
 import Router from 'next/router'
-import NextLink from 'next/link'
+import TopNav from '../../components/TopNav'
 
 const Games = () => {
-    const [username, setUsername] = useState(null)
-
-    useEffect(() => {
-        setUsername(localStorage.getItem('username'))
-    }, [])
-
     return (
         <>
-            <div className="navbar">
-                <Grid.Container gap={2} justify="space-between" css={{alignItems: 'center'}}>
-                    <NextLink href={'/'}>
-                        <Grid>
-                            <Text align="center" h6 size={15} color="black">
-                                Mie Arcade
-                            </Text>
-                        </Grid>
-                    </NextLink>
-                    <NextLink href={username ? '/account' : '/login'}>
-                        <Grid>
-                            {
-                                username ? <User
-                                    src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
-                                    name="Ariana Wattson"
-                                    description="UI/UX Designer @Github"
-                                /> : <Avatar
-                                    squared
-                                    text="Login"/>
-                            }
-                        </Grid>
-                    </NextLink>
-                </Grid.Container>
-            </div>
+            <TopNav/>
             <main className={styles.main}>
                 <Text h1 size={40} css={{
                     textGradient: '45deg, $yellow600 -20%, $red600 100%',
@@ -52,7 +22,7 @@ const Games = () => {
                     </Grid>
                 </div>
 
-                <Text h2 color="#ff4ecd" css={{my: 5}}>
+                <Text h2 color="#ff4ecd" className="text-banner-y" css={{m: 20}}>
                     Leaderboard 🚀
                 </Text>
                 <Grid xs={12}>
