@@ -1,13 +1,17 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button, Container, Grid, Image, Loading, Text } from '@nextui-org/react'
 import { InstagramIcon } from '../components/InstagramIcon'
 
 const Login = () => {
     const [isLoadingBtn, setIsLoadingBtn] = useState(false)
+    const [minHeight, setMinHeight] = useState('800px')
 
+    useEffect(() => {
+        setMinHeight(window.innerHeight)
+    }, [])
     return (
         <>
-            <Container className="App bg-ig-dot" style={{marginTop: '-60px'}}>
+            <Container className="App bg-ig-dot" style={{minHeight}}>
                 <Grid.Container gap={2}>
                     <Grid xs={12}>
                         <Text h3>Login with your Account</Text>

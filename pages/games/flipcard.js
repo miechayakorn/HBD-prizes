@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { Card, Container, Grid, Text } from '@nextui-org/react'
-import { getCardData, shuffle } from '../utils/helper'
+import { getCardData, shuffle } from '../../utils/helper'
 import ReactCardFlip from 'react-card-flip'
-import ModalNewRound from '../components/ModalNewRound'
+import ModalNewRound from '../../components/ModalNewRound'
 import useSound from 'use-sound'
 import confetti from 'canvas-confetti'
 
@@ -49,7 +49,7 @@ const roundData = [
     {gridSize: 4, imgSize: 6}
 ]
 
-const Games = () => {
+const Flipcard = () => {
     const [flippedCards, setFlippedCards] = useState([])
     const [round, setRound] = useState(1)
     const [cardList, setCardList] = useState([])
@@ -58,6 +58,7 @@ const Games = () => {
     const [playOff] = useSound('/assets/sound/pop-up-off.mp3')
     const [playCorrect] = useSound('/assets/sound/correct-answer.mp3')
     const [playCongrat] = useSound('/assets/sound/congrat.mp3')
+    const [minHeight, setMinHeight] = useState('800px')
 
     const handleClick = (name, index) => {
         playOn()
@@ -129,6 +130,7 @@ const Games = () => {
     }
 
     useEffect(() => {
+        setMinHeight(window.innerHeight)
         if (round !== roundData.length + 1) {
             setCardList(shuffle(getCardData(cards, roundData[round - 1].imgSize)).map((card, index) => {
                 return {
@@ -142,54 +144,65 @@ const Games = () => {
     }, [round])
 
     return (
-        <Container className="App bg-dot">
-            <Grid.Container gap={2} justify="center">
-                <Grid xs={4}>
-                    <Card color="gradient">
-                        <Text align="center" h6 size={15} color="white">
-                            {round} of {roundData.length}
-                        </Text>
-                    </Card>
-                </Grid>
-            </Grid.Container>
-            <Grid.Container gap={2}>
-                {cardList.map((item, index) => (
-                    <Grid xs={roundData[round - 1].gridSize} lg={roundData[round - 1].gridSize} key={index}>
-                        <ReactCardFlip containerStyle={{width: '100%'}} isFlipped={item.flipped}
-                                       flipDirection="horizontal">
-                            <Card clickable
-                                  onClick={() => flippedCards.length === 2 ? () => {
-                                  } : handleClick(item.name, index)}
-                            >
-                                <Card.Body css={{p: 0}}>
-                                    <Card.Image
-                                        objectFit="cover"
-                                        src={'/assets/img/boxPrize.png'}
-                                        width="100%"
-                                        height={140}
-                                        alt="box-prize"
-                                    />
-                                </Card.Body>
-                            </Card>
-                            <Card clickable>
-                                <Card.Body css={{p: 0}}>
-                                    <Card.Image
-                                        objectFit="cover"
-                                        src={'/assets/img' + item.img}
-                                        width="100%"
-                                        height={140}
-                                        alt={item.name}
-                                    />
-                                </Card.Body>
-                            </Card>
-                        </ReactCardFlip>
+        <>
+            <div className="navbar">
+                <Grid.Container gap={2} justify="space-between" css={{alignItems: 'center'}}>
+                    <Grid>
+                        <Card color="gradient">
+                            <Text align="center" h6 size={15} color="white">
+                                {round} of {roundData.length}
+                            </Text>
+                        </Card>
                     </Grid>
-                ))}
-            </Grid.Container>
-            <ModalNewRound round={round} roundLength={roundData.length} visible={isModalNextRound}
-                           setVisible={setIsModalNextRound}/>
-        </Container>
+                    <Grid>
+                        <Text align="center" h6 size={15} color="black">
+                            time : 10.00
+                        </Text>
+                    </Grid>
+                </Grid.Container>
+            </div>
+            <div className="main">
+                <Container>
+                    <Grid.Container gap={2}>
+                        {cardList.map((item, index) => (
+                            <Grid xs={roundData[round - 1].gridSize} lg={roundData[round - 1].gridSize} key={index}>
+                                <ReactCardFlip containerStyle={{width: '100%'}} isFlipped={item.flipped}
+                                               flipDirection="horizontal">
+                                    <Card clickable
+                                          onClick={() => flippedCards.length === 2 ? () => {
+                                          } : handleClick(item.name, index)}
+                                    >
+                                        <Card.Body css={{p: 0}}>
+                                            <Card.Image
+                                                objectFit="cover"
+                                                src={'/assets/img/boxPrize.png'}
+                                                width="100%"
+                                                height={140}
+                                                alt="box-prize"
+                                            />
+                                        </Card.Body>
+                                    </Card>
+                                    <Card clickable>
+                                        <Card.Body css={{p: 0}}>
+                                            <Card.Image
+                                                objectFit="cover"
+                                                src={'/assets/img' + item.img}
+                                                width="100%"
+                                                height={140}
+                                                alt={item.name}
+                                            />
+                                        </Card.Body>
+                                    </Card>
+                                </ReactCardFlip>
+                            </Grid>
+                        ))}
+                    </Grid.Container>
+                    <ModalNewRound round={round} roundLength={roundData.length} visible={isModalNextRound}
+                                   setVisible={setIsModalNextRound}/>
+                </Container>
+            </div>
+        </>
     )
 }
 
-export default Games
+export default Flipcard
