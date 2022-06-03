@@ -1,40 +1,20 @@
 import React from 'react'
-import { Card, Container, Grid, Row, Text } from '@nextui-org/react'
+import { Button, Container, Grid, Row } from '@nextui-org/react'
+import NextLink from 'next/link'
 
 const Home = () => {
 
     return (
         <Container>
+            <Row css={{p: 10}}>
+                Welcome my first nextUI by miechayakorn
+            </Row>
             <Row>
-                <Grid.Container gap={2} justify="center">
-                    <Grid xs={4}>
-                        <Card color="primary">
-                            <Text h6 size={15} color="white" css={{mt: 10}}>
-                                1 of 3
-                            </Text>
-                        </Card>
-                    </Grid>
-                    <Grid xs={4}>
-                        <Card color="primary">
-                            <Text h6 size={15} color="white" css={{m: 0}}>
-                                2 of 3
-                            </Text>
-                        </Card>
-                    </Grid>
-                    <Grid xs={4}>
-                        <Card color="gradient">
-                            <Text
-                                css={{fontWeight: '$bold', color: '$white'}}
-                                transform="capitalize"
-                            >
-                                test
-                            </Text>
-                            <Text css={{fontWeight: '$bold', color: '$white'}} span>
-                                test
-                            </Text>
-                        </Card>
-                    </Grid>
-                </Grid.Container>
+                <Grid xs={4}>
+                    <NextLink href={'/games'}>
+                        <Button>Go to Games</Button>
+                    </NextLink>
+                </Grid>
             </Row>
         </Container>
     )
