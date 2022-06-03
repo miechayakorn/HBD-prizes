@@ -2,6 +2,7 @@ import { Button, Grid, Table, Text } from '@nextui-org/react'
 import styles from '../../styles/Home.module.css'
 import Router from 'next/router'
 import TopNav from '../../components/TopNav'
+import React from 'react'
 
 const Games = () => {
     return (
@@ -27,6 +28,7 @@ const Games = () => {
                 </Text>
                 <Grid xs={12}>
                     <Table
+                        color="secondary"
                         aria-label="Leaderboard"
                         css={{
                             height: 'auto',
@@ -34,9 +36,9 @@ const Games = () => {
                         }}
                     >
                         <Table.Header>
-                            <Table.Column>No</Table.Column>
+                            <Table.Column>No.</Table.Column>
                             <Table.Column>NAME</Table.Column>
-                            <Table.Column>Score</Table.Column>
+                            <Table.Column>SCORE</Table.Column>
                         </Table.Header>
                         <Table.Body>
                             <Table.Row key="1">
@@ -64,7 +66,49 @@ const Games = () => {
                                 <Table.Cell>William Howard</Table.Cell>
                                 <Table.Cell>Vacation</Table.Cell>
                             </Table.Row>
+                            <Table.Row key="6">
+                                <Table.Cell>6</Table.Cell>
+                                <Table.Cell>William Howard</Table.Cell>
+                                <Table.Cell>Vacation</Table.Cell>
+                            </Table.Row>
+                            <Table.Row key="7">
+                                <Table.Cell>7</Table.Cell>
+                                <Table.Cell>William Howard</Table.Cell>
+                                <Table.Cell>Vacation</Table.Cell>
+                            </Table.Row>
+                            <Table.Row key="8">
+                                <Table.Cell>8</Table.Cell>
+                                <Table.Cell>William Howard</Table.Cell>
+                                <Table.Cell>Vacation</Table.Cell>
+                            </Table.Row>
+                            <Table.Row key="9">
+                                <Table.Cell>9</Table.Cell>
+                                <Table.Cell>William Howard</Table.Cell>
+                                <Table.Cell>Vacation</Table.Cell>
+                            </Table.Row>
+                            <Table.Row key="10">
+                                <Table.Cell>10</Table.Cell>
+                                <Table.Cell>William Howard</Table.Cell>
+                                <Table.Cell>Vacation</Table.Cell>
+                            </Table.Row>
+                            <Table.Row key="11">
+                                <Table.Cell>11</Table.Cell>
+                                <Table.Cell>William Howard</Table.Cell>
+                                <Table.Cell>Vacation</Table.Cell>
+                            </Table.Row>
+                            <Table.Row key="12">
+                                <Table.Cell>12</Table.Cell>
+                                <Table.Cell>William Howard</Table.Cell>
+                                <Table.Cell>Vacation</Table.Cell>
+                            </Table.Row>
                         </Table.Body>
+                        <Table.Pagination
+                            shadow
+                            noMargin
+                            align="center"
+                            rowsPerPage={3}
+                            onPageChange={(page) => console.log({page})}
+                        />
                     </Table>
                 </Grid>
             </main>
