@@ -10,7 +10,7 @@ const ModalNewRound = ({ visible, setVisible, round, roundLength }) => {
 
     return (
         <Modal
-            width={'80%'}
+            style={{margin: '20px'}}
             aria-labelledby="modal-title"
             open={visible}
             preventClose
