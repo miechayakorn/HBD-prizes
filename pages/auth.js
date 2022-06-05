@@ -2,22 +2,30 @@ import { useEffect, useState } from 'react'
 import { Container, Grid, Loading, Text } from '@nextui-org/react'
 import Router from 'next/router'
 import FormData from 'form-data'
+import axios from 'axios'
+import { encrypt } from '../lib/crypto'
 
 const Auth = ({profile, igToken}) => {
     const [minHeight, setMinHeight] = useState('800px')
 
     useEffect(() => {
         setMinHeight(window.innerHeight)
-        if (profile) {
-            localStorage.setItem('auth', igToken)
-            localStorage.setItem('username', profile.username)
-            setTimeout(() => {
-                Router.push('/')
-            }, 2000)
+        if (profile && profile.username) {
+            fetchAccountDetail()
         } else {
             Router.push('/')
         }
     }, [])
+
+    const fetchAccountDetail = async () => {
+        const {data} = await axios.get('/api/account/detail?username=' + profile.username)
+        localStorage.setItem('uid', encrypt(data.id))
+        localStorage.setItem('auth', igToken)
+        localStorage.setItem('username', profile.username)
+        setTimeout(() => {
+            Router.push('/')
+        }, 2000)
+    }
 
     return (
         <Container className="App bg-ig-dot" style={{minHeight}}>

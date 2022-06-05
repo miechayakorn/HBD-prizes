@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Avatar, Grid, Text, User } from '@nextui-org/react'
 import NextLink from 'next/link'
+import { decrypt } from '../lib/crypto'
 
 const TopNav = () => {
     const [username, setUsername] = useState(null)
@@ -8,7 +9,7 @@ const TopNav = () => {
 
     useEffect(() => {
         setUsername(localStorage.getItem('username'))
-        setUId(localStorage.getItem('uid'))
+        setUId(decrypt(localStorage.getItem('uid')))
     }, [])
 
     return (
