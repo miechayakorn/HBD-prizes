@@ -1,10 +1,11 @@
+import React from 'react'
+import Router from 'next/router'
 import { Button, Grid, Table, Text } from '@nextui-org/react'
 import styles from '../../styles/Home.module.css'
-import Router from 'next/router'
 import TopNav from '../../components/TopNav'
-import React from 'react'
+import { millisToMinutesAndSeconds } from '../../utils/helper'
 
-const Games = () => {
+const Games = ({leader}) => {
     return (
         <>
             <TopNav/>
@@ -41,66 +42,15 @@ const Games = () => {
                             <Table.Column>SCORE</Table.Column>
                         </Table.Header>
                         <Table.Body>
-                            <Table.Row key="1">
-                                <Table.Cell>1</Table.Cell>
-                                <Table.Cell>Tony Reichert</Table.Cell>
-                                <Table.Cell>Active</Table.Cell>
-                            </Table.Row>
-                            <Table.Row key="2">
-                                <Table.Cell>2</Table.Cell>
-                                <Table.Cell>Zoey Lang</Table.Cell>
-                                <Table.Cell>Paused</Table.Cell>
-                            </Table.Row>
-                            <Table.Row key="3">
-                                <Table.Cell>3</Table.Cell>
-                                <Table.Cell>Jane Fisher</Table.Cell>
-                                <Table.Cell>Active</Table.Cell>
-                            </Table.Row>
-                            <Table.Row key="4">
-                                <Table.Cell>4</Table.Cell>
-                                <Table.Cell>William Howard</Table.Cell>
-                                <Table.Cell>Vacation</Table.Cell>
-                            </Table.Row>
-                            <Table.Row key="5">
-                                <Table.Cell>5</Table.Cell>
-                                <Table.Cell>William Howard</Table.Cell>
-                                <Table.Cell>Vacation</Table.Cell>
-                            </Table.Row>
-                            <Table.Row key="6">
-                                <Table.Cell>6</Table.Cell>
-                                <Table.Cell>William Howard</Table.Cell>
-                                <Table.Cell>Vacation</Table.Cell>
-                            </Table.Row>
-                            <Table.Row key="7">
-                                <Table.Cell>7</Table.Cell>
-                                <Table.Cell>William Howard</Table.Cell>
-                                <Table.Cell>Vacation</Table.Cell>
-                            </Table.Row>
-                            <Table.Row key="8">
-                                <Table.Cell>8</Table.Cell>
-                                <Table.Cell>William Howard</Table.Cell>
-                                <Table.Cell>Vacation</Table.Cell>
-                            </Table.Row>
-                            <Table.Row key="9">
-                                <Table.Cell>9</Table.Cell>
-                                <Table.Cell>William Howard</Table.Cell>
-                                <Table.Cell>Vacation</Table.Cell>
-                            </Table.Row>
-                            <Table.Row key="10">
-                                <Table.Cell>10</Table.Cell>
-                                <Table.Cell>William Howard</Table.Cell>
-                                <Table.Cell>Vacation</Table.Cell>
-                            </Table.Row>
-                            <Table.Row key="11">
-                                <Table.Cell>11</Table.Cell>
-                                <Table.Cell>William Howard</Table.Cell>
-                                <Table.Cell>Vacation</Table.Cell>
-                            </Table.Row>
-                            <Table.Row key="12">
-                                <Table.Cell>12</Table.Cell>
-                                <Table.Cell>William Howard</Table.Cell>
-                                <Table.Cell>Vacation</Table.Cell>
-                            </Table.Row>
+                            {
+                                leader && leader.result.map((data, index) => {
+                                    return <Table.Row key={index}>
+                                        <Table.Cell>{index + 1}</Table.Cell>
+                                        <Table.Cell>{data.username}</Table.Cell>
+                                        <Table.Cell>{millisToMinutesAndSeconds(data.time_spent)}</Table.Cell>
+                                    </Table.Row>
+                                })
+                            }
                         </Table.Body>
                         <Table.Pagination
                             shadow
@@ -113,7 +63,23 @@ const Games = () => {
                 </Grid>
             </main>
         </>
-
     )
 }
+
+export const getServerSideProps = async () => {
+    let leader = null
+    const leaderRes = await fetch('http://localhost:3000/api/leaderboard', {
+        method: 'get'
+    })
+    if (leaderRes.status === 200) {
+        leader = await leaderRes.json()
+    }
+
+    return {
+        props: {
+            leader
+        },
+    }
+}
+
 export default Games

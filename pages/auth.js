@@ -1,10 +1,12 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { Container, Grid, Loading, Text } from '@nextui-org/react'
-import Router from 'next/router'
 import FormData from 'form-data'
 
 const Auth = ({profile, igToken}) => {
+    const [minHeight, setMinHeight] = useState('800px')
+
     useEffect(() => {
+        setMinHeight(window.innerHeight)
         if (profile) {
             localStorage.setItem('auth', igToken)
             localStorage.setItem('username', profile.username)
@@ -14,11 +16,10 @@ const Auth = ({profile, igToken}) => {
         } else {
             Router.push('/')
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     return (
-        <Container className="App bg-ig-dot" style={{marginTop: '-60px'}}>
+        <Container className="App bg-ig-dot" style={{minHeight}}>
             <Grid.Container gap={2}>
                 <Grid xs={12} justify="center">
                     <Text h3>Welcome, {profile?.username}</Text>
