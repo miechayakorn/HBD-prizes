@@ -21,12 +21,18 @@ const Account = () => {
                     <ReactCardFlip containerStyle={{width: '100%'}} isFlipped={isFlipped}
                                    flipDirection="vertical">
                         <Card cover css={{w: '100%'}}>
-                            <Card.Header css={{position: 'absolute', zIndex: 1, top: 5}}>
+                            <Card.Header
+                                blur css={{
+                                position: 'absolute',
+                                bgBlur: '#ffffff',
+                                borderBottom: '$borderWeights$light solid rgba(255, 255, 255, 0.2)',
+                                 zIndex: 1
+                            }}>
                                 <Col>
                                     <Text size={12} weight="bold" transform="uppercase" color="#ffffffAA">
                                         New (0 items)
                                     </Text>
-                                    <Text h3 color="black">
+                                    <Text h3 color="#7828c8">
                                         {username}
                                     </Text>
                                 </Col>
