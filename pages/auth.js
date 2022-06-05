@@ -38,8 +38,8 @@ export const getServerSideProps = async ({query}) => {
     let igToken = null
     if (code) {
         let bodyFormData = new FormData()
-        bodyFormData.append('client_id', '1158691484675995')
-        bodyFormData.append('client_secret', '5bc08d49b174ce362cc352d0eb16d461')
+        bodyFormData.append('client_id', process.env.client_id)
+        bodyFormData.append('client_secret', process.env.client_secret)
         bodyFormData.append('grant_type', 'authorization_code')
         bodyFormData.append('code', code)
         bodyFormData.append('redirect_uri', 'https://arcade.miechayakorn.tk/auth')
