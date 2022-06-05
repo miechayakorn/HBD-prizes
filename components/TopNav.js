@@ -4,9 +4,11 @@ import NextLink from 'next/link'
 
 const TopNav = () => {
     const [username, setUsername] = useState(null)
+    const [uid, setUId] = useState(null)
 
     useEffect(() => {
         setUsername(localStorage.getItem('username'))
+        setUId(localStorage.getItem('uid'))
     }, [])
 
     return (
@@ -24,8 +26,8 @@ const TopNav = () => {
                         {
                             username ? <User
                                 src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
-                                name="Ariana Wattson"
-                                description="UI/UX"
+                                name={username}
+                                description={'User id : '+uid}
                             /> : <Avatar
                                 squared
                                 text="Login"/>

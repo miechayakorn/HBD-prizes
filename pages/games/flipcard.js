@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react'
+import axios from 'axios'
 import { Card, Container, Grid, Text } from '@nextui-org/react'
 import { getCardData, shuffle } from '../../utils/helper'
 import ReactCardFlip from 'react-card-flip'
 import ModalNewRound from '../../components/ModalNewRound'
 import useSound from 'use-sound'
-import confetti from 'canvas-confetti'
+import ModalGetStart from '../../components/ModalGetStart'
+import Timer from '../../components/Timer'
+import { encrypt } from '../../lib/crypto'
 
 const cards = [
     // {
@@ -53,12 +56,24 @@ const Flipcard = () => {
     const [flippedCards, setFlippedCards] = useState([])
     const [round, setRound] = useState(1)
     const [cardList, setCardList] = useState([])
+    const [isModalGetStart, setIsModalGetStart] = useState(true)
     const [isModalNextRound, setIsModalNextRound] = useState(false)
+    const [time, setTime] = useState(0)
+    const [start, setStart] = useState(false)
+    const [gameCode, setGameCode] = useState('')
+
     const [playOn] = useSound('/assets/sound/pop-up-on.mp3')
     const [playOff] = useSound('/assets/sound/pop-up-off.mp3')
     const [playCorrect] = useSound('/assets/sound/correct-answer.mp3')
     const [playCongrat] = useSound('/assets/sound/congrat.mp3')
-    const [minHeight, setMinHeight] = useState('800px')
+
+    const startTimer = () => {
+        setStart(true)
+    }
+
+    const stopTimer = () => {
+        setStart(false)
+    }
 
     const handleClick = (name, index) => {
         playOn()
@@ -101,7 +116,20 @@ const Flipcard = () => {
         setFlippedCards([])
     }
 
-    const isGameOver = () => {
+    const fetchTacking = async (round) => {
+        if (round === 1) {
+            const id = encrypt(JSON.stringify({userId: localStorage.getItem('uid'), timeSpent: time}))
+            const {data} = await axios.post('/api/tracking', {id})
+            setGameCode(data.gameCode)
+            return data
+        } else {
+            const id = encrypt(JSON.stringify({userId: localStorage.getItem('uid'), gameCode, round, timeSpent: time}))
+            const {data} = await axios.put('/api/tracking', {id})
+            return data
+        }
+    }
+
+    const isGameOver = async () => {
         let done = true
         cardList.forEach(card => {
             if (!card.matched) done = false
@@ -110,19 +138,18 @@ const Flipcard = () => {
             const newRound = round + 1
             const isNotGameEnd = newRound !== roundData.length + 1
             if (isNotGameEnd) {
+                stopTimer()
                 setRound(newRound)
                 setFlippedCards([])
                 setIsModalNextRound(true)
+                await fetchTacking(newRound - 1)
                 setTimeout(() => {
                     playCorrect()
                 }, 300)
             } else {
+                await fetchTacking(round)
                 playCongrat()
-                confetti({
-                    particleCount: 100,
-                    spread: 70,
-                    origin: {y: 0.6}
-                })
+                setIsModalNextRound(true)
             }
         } else {
             playOff()
@@ -130,7 +157,6 @@ const Flipcard = () => {
     }
 
     useEffect(() => {
-        setMinHeight(window.innerHeight)
         if (round !== roundData.length + 1) {
             setCardList(shuffle(getCardData(cards, roundData[round - 1].imgSize)).map((card, index) => {
                 return {
@@ -156,7 +182,7 @@ const Flipcard = () => {
                     </Grid>
                     <Grid>
                         <Text align="center" h6 size={15} color="black">
-                            time : 10.00
+                            time : <Timer start={start} time={time} setTime={setTime}/>
                         </Text>
                     </Grid>
                 </Grid.Container>
@@ -197,8 +223,9 @@ const Flipcard = () => {
                             </Grid>
                         ))}
                     </Grid.Container>
+                    <ModalGetStart visible={isModalGetStart} setVisible={setIsModalGetStart} startTimer={startTimer}/>
                     <ModalNewRound round={round} roundLength={roundData.length} visible={isModalNextRound}
-                                   setVisible={setIsModalNextRound}/>
+                                   setVisible={setIsModalNextRound} time={time} startTimer={startTimer}/>
                 </Container>
             </div>
         </>

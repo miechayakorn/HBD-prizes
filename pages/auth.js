@@ -1,10 +1,13 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { Container, Grid, Loading, Text } from '@nextui-org/react'
 import Router from 'next/router'
 import FormData from 'form-data'
 
 const Auth = ({profile, igToken}) => {
+    const [minHeight, setMinHeight] = useState('800px')
+
     useEffect(() => {
+        setMinHeight(window.innerHeight)
         if (profile) {
             localStorage.setItem('auth', igToken)
             localStorage.setItem('username', profile.username)
@@ -14,11 +17,10 @@ const Auth = ({profile, igToken}) => {
         } else {
             Router.push('/')
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     return (
-        <Container className="App bg-ig-dot" style={{marginTop: '-60px'}}>
+        <Container className="App bg-ig-dot" style={{minHeight}}>
             <Grid.Container gap={2}>
                 <Grid xs={12} justify="center">
                     <Text h3>Welcome, {profile?.username}</Text>
@@ -37,8 +39,8 @@ export const getServerSideProps = async ({query}) => {
     let igToken = null
     if (code) {
         let bodyFormData = new FormData()
-        bodyFormData.append('client_id', '1158691484675995')
-        bodyFormData.append('client_secret', '5bc08d49b174ce362cc352d0eb16d461')
+        bodyFormData.append('client_id', process.env.client_id)
+        bodyFormData.append('client_secret', process.env.client_secret)
         bodyFormData.append('grant_type', 'authorization_code')
         bodyFormData.append('code', code)
         bodyFormData.append('redirect_uri', 'https://arcade.miechayakorn.tk/auth')

@@ -2,7 +2,7 @@ import React from 'react'
 import { Button, Modal, Row, Text } from '@nextui-org/react'
 import Router from 'next/router'
 
-const ModalNewRound = ({ visible, setVisible, round, roundLength }) => {
+const ModalNewRound = ({visible, setVisible, round, roundLength, time, startTimer}) => {
 
     const closeHandler = () => {
         setVisible(false)
@@ -23,19 +23,33 @@ const ModalNewRound = ({ visible, setVisible, round, roundLength }) => {
             </Modal.Header>
             <Modal.Body>
                 <Row justify="space-between">
-                    <Text size={16}>You passed {round - 1} of {roundLength} levels 😀</Text>
+                    <Text size={16}>You passed {round !== roundLength ? round - 1 : round} of {roundLength} levels
+                        😀</Text>
                 </Row>
             </Modal.Body>
             <Modal.Footer>
-                {round !== roundLength + 1 ? <Button auto onClick={closeHandler}>
-                    Next Level
-                </Button> : <Button auto onClick={() =>
-                    Router.push({
-                        pathname: '/congrat',
-                        query: { name: 'Someone' }
-                    })}>
-                    View Prize
-                </Button>}
+                {round !== roundLength ?
+                    <Button auto
+                            color={'warning'}
+                            shadow
+                            onClick={() => {
+                                closeHandler()
+                                startTimer()
+                            }}>
+                        Next Level
+                    </Button> :
+                    <Button auto
+                            color={'success'}
+                            shadow
+                            onClick={() =>
+                                Router.push({
+                                    pathname: '/congrat',
+                                    query: {time}
+                                })
+                            }>
+                        View Score
+                    </Button>
+                }
             </Modal.Footer>
         </Modal>
     )
