@@ -28,7 +28,7 @@ const TopNav = () => {
                     <Grid>
                         {
                             username ? <User
-                                src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
+                                src="https://picsum.photos/150/150"
                                 name={username}
                                 description={'User id : ' + uid}
                             /> : <Avatar
