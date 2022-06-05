@@ -39,7 +39,7 @@ const Games = ({leader}) => {
                         <Table.Header>
                             <Table.Column>No.</Table.Column>
                             <Table.Column>NAME</Table.Column>
-                            <Table.Column>SCORE</Table.Column>
+                            <Table.Column>TIME</Table.Column>
                         </Table.Header>
                         <Table.Body>
                             {

@@ -55,7 +55,7 @@ a {
 }
 
 .text-banner-y {
-    transform: skewY(-3deg);
+    transform: skewY(-2deg);
     color: #564a5f;
     text-shadow: #bfbaff 4px 4px, #ffdef7 8px 8px;
 }
