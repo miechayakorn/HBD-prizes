@@ -147,25 +147,23 @@ const Flipcard = () => {
             if (!card.matched) done = false
         })
         if (done) {
+            stopTimer()
             const newRound = round + 1
             const isNotGameEnd = newRound !== roundData.length + 1
+            setRound(newRound)
+            setIsModalNextRound(true)
+            if (localStorage.getItem('uid')) {
+                await fetchTacking(newRound - 1)
+            }
             if (isNotGameEnd) {
-                stopTimer()
-                setRound(newRound)
                 setFlippedCards([])
-                setIsModalNextRound(true)
-                if (localStorage.getItem('uid')) {
-                    await fetchTacking(newRound - 1)
-                }
                 setTimeout(() => {
                     playCorrect()
                 }, 300)
             } else {
-                if (localStorage.getItem('uid')) {
-                    await fetchTacking(round)
-                }
-                playCongrat()
-                setIsModalNextRound(true)
+                setTimeout(() => {
+                    playCongrat()
+                }, 300)
             }
         } else {
             playOff()

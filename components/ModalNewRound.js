@@ -23,12 +23,12 @@ const ModalNewRound = ({visible, setVisible, round, roundLength, time, startTime
             </Modal.Header>
             <Modal.Body>
                 <Row justify="space-between">
-                    <Text size={16}>You passed {round !== roundLength ? round - 1 : round} of {roundLength} levels
+                    <Text size={16}>You passed {round - 1} of {roundLength} levels
                         😀</Text>
                 </Row>
             </Modal.Body>
             <Modal.Footer>
-                {round !== roundLength ?
+                {round !== roundLength + 1 ?
                     <Button auto
                             color={'warning'}
                             shadow
