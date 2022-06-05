@@ -19,7 +19,7 @@ const Auth = ({profile, igToken}) => {
 
     const fetchAccountDetail = async () => {
         const {data} = await axios.get('/api/account/detail?username=' + profile.username)
-        localStorage.setItem('uid', encrypt(data.id))
+        localStorage.setItem('uid', encrypt(data.result.id))
         localStorage.setItem('auth', igToken)
         localStorage.setItem('username', profile.username)
         setTimeout(() => {
