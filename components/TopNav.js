@@ -8,8 +8,10 @@ const TopNav = () => {
     const [uid, setUId] = useState(null)
 
     useEffect(() => {
-        setUsername(localStorage.getItem('username'))
-        setUId(decrypt(localStorage.getItem('uid')))
+        if (localStorage.getItem('uid')) {
+            setUsername(localStorage.getItem('username'))
+            setUId(decrypt(localStorage.getItem('uid')))
+        }
     }, [])
 
     return (
@@ -28,7 +30,7 @@ const TopNav = () => {
                             username ? <User
                                 src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
                                 name={username}
-                                description={'User id : '+uid}
+                                description={'User id : ' + uid}
                             /> : <Avatar
                                 squared
                                 text="Login"/>

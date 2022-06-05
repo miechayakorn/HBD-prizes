@@ -1,7 +1,13 @@
-import React from 'react'
-import { Button, Modal, Row, Text } from '@nextui-org/react'
+import React, { useEffect, useState } from 'react'
+import { Button, Modal, Text } from '@nextui-org/react'
+import Router from 'next/router'
 
 const ModalGetStart = ({visible, setVisible, startTimer}) => {
+    const [isLogged, setIsLogged] = useState(null)
+
+    useEffect(() => {
+        setIsLogged(localStorage.getItem('uid'))
+    }, [])
 
     const closeHandler = () => {
         setVisible(false)
@@ -21,12 +27,16 @@ const ModalGetStart = ({visible, setVisible, startTimer}) => {
                 </Text>
             </Modal.Header>
             <Modal.Body>
-                <Row justify="space-between">
-                    <Text size={16}>The game has a total of 5 levels, you have to complete the time as quickly as
-                        possible 😎</Text>
-                </Row>
+                <Text size={16}>The game has a total of 5 levels, you have to complete the time as quickly as
+                    possible 😎</Text>
+                {!isLogged && <Text color={'error'}>
+                    You are not logged in will make the system unable to save the score
+                </Text>}
             </Modal.Body>
             <Modal.Footer>
+                {!isLogged && <Button color={'error'} shadow auto onClick={() => Router.push('/login')}>
+                    Login
+                </Button>}
                 <Button color={'warning'} shadow auto onClick={() => {
                     startTimer()
                     closeHandler()

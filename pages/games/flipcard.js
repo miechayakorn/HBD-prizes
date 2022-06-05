@@ -154,12 +154,16 @@ const Flipcard = () => {
                 setRound(newRound)
                 setFlippedCards([])
                 setIsModalNextRound(true)
-                await fetchTacking(newRound - 1)
+                if (localStorage.getItem('uid')) {
+                    await fetchTacking(newRound - 1)
+                }
                 setTimeout(() => {
                     playCorrect()
                 }, 300)
             } else {
-                await fetchTacking(round)
+                if (localStorage.getItem('uid')) {
+                    await fetchTacking(round)
+                }
                 playCongrat()
                 setIsModalNextRound(true)
             }
