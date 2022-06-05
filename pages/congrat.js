@@ -1,18 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import confetti from 'canvas-confetti'
-import { useRouter } from 'next/router'
+import Router, { useRouter } from 'next/router'
 import { Button, Grid, Text } from '@nextui-org/react'
 import { millisToMinutesAndSeconds } from '../utils/helper'
 import TopNav from '../components/TopNav'
-import Router from 'next/router'
 import styles from '../styles/Home.module.css'
 
 const Congrat = () => {
     const router = useRouter()
-    const [minHeight, setMinHeight] = useState('800px')
+    const [username, setUsername] = useState(null)
 
     useEffect(() => {
-        setMinHeight(window.innerHeight)
+        setUsername(localStorage.getItem('username'))
         confetti({
             particleCount: 100,
             spread: 70,
@@ -39,11 +38,11 @@ const Congrat = () => {
                             Back To Home
                         </Button>
                     </Grid>
-                    <Grid>
+                    {username && <Grid>
                         <Button shadow color="error" auto onClick={() => Router.push('/account')}>
                             My Account
                         </Button>
-                    </Grid>
+                    </Grid>}
                 </Grid.Container>
             </main>}
         </>
