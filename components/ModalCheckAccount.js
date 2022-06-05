@@ -17,7 +17,7 @@ const ModalCheckAccount = ({visible, setVisible}) => {
     const fetchAccountDetail = async () => {
         const {data} = await axios.get('/api/account/detail?username=' + username)
         if (data.result) {
-            setStatus(data.result.is_active === 1 ? 'ส่งคำเชิญแล้ว' : 'รอส่งคำเชิญ')
+            setStatus(data.result.is_active === 1 ? 'ส่งคำเชิญแล้ว' : 'รอระบบส่งคำเชิญ สักครู่..')
         } else {
             setStatus('ไม่พบ username นี้ในระบบ')
         }
