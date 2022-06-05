@@ -119,10 +119,8 @@ const Flipcard = () => {
 
     const fetchTacking = async (round) => {
         if (round === 1) {
-            const id = encrypt(JSON.stringify({userId: localStorage.getItem('uid')}))
-
+            const id = encrypt(JSON.stringify({userId: localStorage.getItem('uid'), timeSpent: time}))
             const {data} = await axios.post('/api/tracking', {id})
-            console.log(data)
             setGameCode(data.gameCode)
             return data
         } else {

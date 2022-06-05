@@ -8,7 +8,7 @@ const handler = async (req, res) => {
 
     if (req.method === 'POST' && decryptData.userId) {
         try {
-            const gameCode = await createHistory({...decryptData, gameId: 1})
+            const gameCode = await createHistory({...decryptData, gameId: 1, rounds: 1})
             res.status(200).json({gameCode})
         } catch (err) {
             res.status(500).json({error: err.sqlMessage || 'failed to load data'})
