@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import { Button, Container, Grid, Image, Loading, Text } from '@nextui-org/react'
+import { Button, Container, Grid, Loading, Row, Text } from '@nextui-org/react'
 import { InstagramIcon } from '../components/InstagramIcon'
+import ModalCheckAccount from '../components/ModalCheckAccount'
 
 const Login = () => {
     const [isLoadingBtn, setIsLoadingBtn] = useState(false)
     const [minHeight, setMinHeight] = useState('800px')
+    const [isModal, setIsModal] = useState(false)
 
     useEffect(() => {
         setMinHeight(window.innerHeight)
@@ -13,16 +15,19 @@ const Login = () => {
         <>
             <Container className="App bg-ig-dot" style={{minHeight}}>
                 <Grid.Container gap={2}>
-                    <Grid xs={12}>
-                        <Text h3>Login with your Account</Text>
+                    <Grid xs={12} justify="center">
+                        <Text h1 size={40} css={{
+                            textGradient: '45deg, $yellow600 -20%, $red600 100%',
+                            mb: '5px'
+                        }}>
+                            Login
+                        </Text>
                     </Grid>
-                    <Image
-                        width={320}
-                        height={180}
-                        src="https://github.com/nextui-org/nextui/blob/next/apps/docs/public/nextui-banner.jpeg?raw=true"
-                        alt="Default Image"
-                        objectFit="cover"
-                    />
+                    <Row>
+                        <Text>** ต้องทำการเพิ่มแอป Mie Arcade ก่อนกด Login ตรวจสอบสถานะคำเชิญ
+                            <Button size="xs" onClick={() => setIsModal(true)}>โดยกดที่นี่</Button>
+                        </Text>
+                    </Row>
                     <Grid xs={12} justify="center">
                         <Button size="lg"
                                 css={{mt: 50, width: '80%'}}
@@ -42,6 +47,7 @@ const Login = () => {
                         </Button>
                     </Grid>
                 </Grid.Container>
+                <ModalCheckAccount visible={isModal} setVisible={setIsModal}/>
             </Container>
         </>
     )
