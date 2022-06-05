@@ -157,13 +157,9 @@ const Flipcard = () => {
             }
             if (isNotGameEnd) {
                 setFlippedCards([])
-                setTimeout(() => {
-                    playCorrect()
-                }, 300)
+                playCorrect()
             } else {
-                setTimeout(() => {
-                    playCongrat()
-                }, 300)
+                playCongrat()
             }
         } else {
             playOff()
