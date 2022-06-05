@@ -19,7 +19,7 @@ const Account = () => {
             <main className={styles.main}>
                 <Grid xs={12} sm={5}>
                     <ReactCardFlip containerStyle={{width: '100%'}} isFlipped={isFlipped}
-                                   flipDirection="vertical">
+                                   flipDirection="horizontal">
                         <Card cover css={{w: '100%'}}>
                             <Card.Header
                                 blur css={{
