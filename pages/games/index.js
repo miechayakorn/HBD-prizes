@@ -68,7 +68,7 @@ const Games = ({leader}) => {
 
 export const getServerSideProps = async () => {
     let leader = null
-    const leaderRes = await fetch('http://localhost:3000/api/leaderboard', {
+    const leaderRes = await fetch(`${process.env.DOMAIN}/api/leaderboard`, {
         method: 'get'
     })
     if (leaderRes.status === 200) {
