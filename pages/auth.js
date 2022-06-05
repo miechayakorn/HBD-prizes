@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Container, Grid, Loading, Text } from '@nextui-org/react'
+import Router from 'next/router'
 import FormData from 'form-data'
 
 const Auth = ({profile, igToken}) => {

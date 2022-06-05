@@ -2,7 +2,7 @@ import React from 'react'
 import { Button, Modal, Row, Text } from '@nextui-org/react'
 import Router from 'next/router'
 
-const ModalNewRound = ({visible, setVisible, round, roundLength, startTimer}) => {
+const ModalNewRound = ({visible, setVisible, round, roundLength, time, startTimer}) => {
 
     const closeHandler = () => {
         setVisible(false)
@@ -44,7 +44,7 @@ const ModalNewRound = ({visible, setVisible, round, roundLength, startTimer}) =>
                             onClick={() =>
                                 Router.push({
                                     pathname: '/congrat',
-                                    query: {name: 'Someone'}
+                                    query: {time}
                                 })
                             }>
                         View Score

@@ -225,7 +225,7 @@ const Flipcard = () => {
                     </Grid.Container>
                     <ModalGetStart visible={isModalGetStart} setVisible={setIsModalGetStart} startTimer={startTimer}/>
                     <ModalNewRound round={round} roundLength={roundData.length} visible={isModalNextRound}
-                                   setVisible={setIsModalNextRound} startTimer={startTimer}/>
+                                   setVisible={setIsModalNextRound} time={time} startTimer={startTimer}/>
                 </Container>
             </div>
         </>

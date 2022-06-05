@@ -1,13 +1,18 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import confetti from 'canvas-confetti'
-import { Button } from '@nextui-org/react'
+import { useRouter } from 'next/router'
+import { Button, Grid, Text } from '@nextui-org/react'
+import { millisToMinutesAndSeconds } from '../utils/helper'
+import TopNav from '../components/TopNav'
+import Router from 'next/router'
+import styles from '../styles/Home.module.css'
 
 const Congrat = () => {
+    const router = useRouter()
+    const [minHeight, setMinHeight] = useState('800px')
 
     useEffect(() => {
-        setTimeout(() => {
-            playSound()
-        }, 5000)
+        setMinHeight(window.innerHeight)
         confetti({
             particleCount: 100,
             spread: 70,
@@ -15,10 +20,34 @@ const Congrat = () => {
         })
     }, [])
 
-    const playSound = () => {
-    }
 
-    return <Button onClick={() => playSound()}>test</Button>
+    return (
+        <>
+            <TopNav/>
+            {router.query.time && <main className={styles.main}>
+                <Text h1 size={40} css={{
+                    textGradient: '45deg, $yellow600 -20%, $red600 100%',
+                }}>
+                    Congrats !
+                </Text>
+                <Grid xs={12} justify="center" css={{mt: 6}}>
+                    <Text h3 weight={'black'}>TIME : {millisToMinutesAndSeconds(router.query.time)}</Text>
+                </Grid>
+                <Grid.Container gap={2} justify="center" css={{mt: '20px'}}>
+                    <Grid>
+                        <Button shadow color="warning" auto onClick={() => Router.push('/games')}>
+                            Back To Home
+                        </Button>
+                    </Grid>
+                    <Grid>
+                        <Button shadow color="error" auto onClick={() => Router.push('/account')}>
+                            My Account
+                        </Button>
+                    </Grid>
+                </Grid.Container>
+            </main>}
+        </>
+    )
 }
 
 export default Congrat
