@@ -23,24 +23,31 @@ const ModalNewRound = ({visible, setVisible, round, roundLength, startTimer}) =>
             </Modal.Header>
             <Modal.Body>
                 <Row justify="space-between">
-                    <Text size={16}>You passed {round - 1} of {roundLength} levels 😀</Text>
+                    <Text size={16}>You passed {round !== roundLength ? round - 1 : round} of {roundLength} levels
+                        😀</Text>
                 </Row>
             </Modal.Body>
             <Modal.Footer>
-                {round !== roundLength + 1 ?
-                    <Button auto onClick={() => {
-                        closeHandler()
-                        startTimer()
-                    }}>
+                {round !== roundLength ?
+                    <Button auto
+                            color={'warning'}
+                            shadow
+                            onClick={() => {
+                                closeHandler()
+                                startTimer()
+                            }}>
                         Next Level
                     </Button> :
-                    <Button auto onClick={() =>
-                        Router.push({
-                            pathname: '/congrat',
-                            query: {name: 'Someone'}
-                        })
-                    }>
-                        View Prize
+                    <Button auto
+                            color={'success'}
+                            shadow
+                            onClick={() =>
+                                Router.push({
+                                    pathname: '/congrat',
+                                    query: {name: 'Someone'}
+                                })
+                            }>
+                        View Score
                     </Button>
                 }
             </Modal.Footer>

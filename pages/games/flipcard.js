@@ -5,7 +5,6 @@ import { getCardData, shuffle } from '../../utils/helper'
 import ReactCardFlip from 'react-card-flip'
 import ModalNewRound from '../../components/ModalNewRound'
 import useSound from 'use-sound'
-import confetti from 'canvas-confetti'
 import ModalGetStart from '../../components/ModalGetStart'
 import Timer from '../../components/Timer'
 import { encrypt } from '../../lib/crypto'
@@ -148,12 +147,9 @@ const Flipcard = () => {
                     playCorrect()
                 }, 300)
             } else {
+                await fetchTacking(round)
                 playCongrat()
-                confetti({
-                    particleCount: 100,
-                    spread: 70,
-                    origin: {y: 0.6}
-                })
+                setIsModalNextRound(true)
             }
         } else {
             playOff()

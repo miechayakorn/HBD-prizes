@@ -27,7 +27,7 @@ const ModalGetStart = ({visible, setVisible, startTimer}) => {
                 </Row>
             </Modal.Body>
             <Modal.Footer>
-                <Button auto onClick={() => {
+                <Button color={'warning'} shadow auto onClick={() => {
                     startTimer()
                     closeHandler()
                 }}>
