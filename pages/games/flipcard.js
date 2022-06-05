@@ -204,8 +204,8 @@ const Flipcard = () => {
             <div className="main">
                 <Container>
                     <Grid.Container gap={2}>
-                        {cardList.map((item, index) => (
-                            <Grid xs={roundData[round - 1].gridSize} lg={roundData[round - 1].gridSize} key={index}>
+                        {(round <= roundData.length) && cardList.map((item, index) => (
+                            <Grid xs={roundData[round - 1]?.gridSize} lg={roundData[round - 1]?.gridSize} key={index}>
                                 <ReactCardFlip containerStyle={{width: '100%'}} isFlipped={item.flipped}
                                                flipDirection="horizontal">
                                     <Card clickable
