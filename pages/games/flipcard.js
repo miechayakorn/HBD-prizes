@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import axios from 'axios'
 import { Card, Container, Grid, Text } from '@nextui-org/react'
 import { getCardData, shuffle } from '../../utils/helper'
 import ReactCardFlip from 'react-card-flip'
@@ -7,6 +8,7 @@ import useSound from 'use-sound'
 import confetti from 'canvas-confetti'
 import ModalGetStart from '../../components/ModalGetStart'
 import Timer from '../../components/Timer'
+import { encrypt } from '../../lib/crypto'
 
 const cards = [
     // {
@@ -59,6 +61,7 @@ const Flipcard = () => {
     const [isModalNextRound, setIsModalNextRound] = useState(false)
     const [time, setTime] = useState(0)
     const [start, setStart] = useState(false)
+    const [gameCode, setGameCode] = useState('')
 
     const [playOn] = useSound('/assets/sound/pop-up-on.mp3')
     const [playOff] = useSound('/assets/sound/pop-up-off.mp3')
@@ -70,11 +73,6 @@ const Flipcard = () => {
     }
 
     const stopTimer = () => {
-        setStart(false)
-    }
-
-    const resetTimer = () => {
-        setTime(0)
         setStart(false)
     }
 
@@ -119,7 +117,22 @@ const Flipcard = () => {
         setFlippedCards([])
     }
 
-    const isGameOver = () => {
+    const fetchTacking = async (round) => {
+        if (round === 1) {
+            const id = encrypt(JSON.stringify({userId: localStorage.getItem('uid')}))
+
+            const {data} = await axios.post('/api/tracking', {id})
+            console.log(data)
+            setGameCode(data.gameCode)
+            return data
+        } else {
+            const id = encrypt(JSON.stringify({userId: localStorage.getItem('uid'), gameCode, round, timeSpent: time}))
+            const {data} = await axios.put('/api/tracking', {id})
+            return data
+        }
+    }
+
+    const isGameOver = async () => {
         let done = true
         cardList.forEach(card => {
             if (!card.matched) done = false
@@ -132,6 +145,7 @@ const Flipcard = () => {
                 setRound(newRound)
                 setFlippedCards([])
                 setIsModalNextRound(true)
+                await fetchTacking(newRound - 1)
                 setTimeout(() => {
                     playCorrect()
                 }, 300)
@@ -174,7 +188,7 @@ const Flipcard = () => {
                     </Grid>
                     <Grid>
                         <Text align="center" h6 size={15} color="black">
-                            time : <Timer  start={start} time={time} setTime={setTime} />
+                            time : <Timer start={start} time={time} setTime={setTime}/>
                         </Text>
                     </Grid>
                 </Grid.Container>
