@@ -7,7 +7,7 @@ import ModalNewRound from '../../components/ModalNewRound'
 import useSound from 'use-sound'
 import ModalGetStart from '../../components/ModalGetStart'
 import Timer from '../../components/Timer'
-import { encrypt } from '../../lib/crypto'
+import { decrypt, encrypt } from '../../lib/crypto'
 
 const cards = [
     // {
@@ -118,12 +118,24 @@ const Flipcard = () => {
 
     const fetchTacking = async (round) => {
         if (round === 1) {
-            const id = encrypt(JSON.stringify({userId: localStorage.getItem('uid'), timeSpent: time}))
+            const id = encrypt(
+                JSON.stringify({
+                    userId: decrypt(localStorage.getItem('uid')),
+                    timeSpent: time
+                })
+            )
             const {data} = await axios.post('/api/tracking', {id})
             setGameCode(data.gameCode)
             return data
         } else {
-            const id = encrypt(JSON.stringify({userId: localStorage.getItem('uid'), gameCode, round, timeSpent: time}))
+            const id = encrypt(
+                JSON.stringify({
+                    userId: decrypt(localStorage.getItem('uid')),
+                    gameCode,
+                    round,
+                    timeSpent: time
+                })
+            )
             const {data} = await axios.put('/api/tracking', {id})
             return data
         }
