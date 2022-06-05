@@ -136,12 +136,11 @@ const Flipcard = () => {
                     timeSpent: time
                 })
             )
-            const {data} = await axios.put('/api/tracking', {id})
-            return data
+            await axios.put('/api/tracking', {id})
         }
     }
 
-    const isGameOver = async () => {
+    const isGameOver = () => {
         let done = true
         cardList.forEach(card => {
             if (!card.matched) done = false
@@ -153,7 +152,7 @@ const Flipcard = () => {
             setRound(newRound)
             setIsModalNextRound(true)
             if (localStorage.getItem('uid')) {
-                await fetchTacking(newRound - 1)
+                fetchTacking(newRound - 1)
             }
             if (isNotGameEnd) {
                 setFlippedCards([])
