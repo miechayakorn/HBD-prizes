@@ -5,6 +5,8 @@ import ReactCardFlip from 'react-card-flip'
 import ModalNewRound from '../../components/ModalNewRound'
 import useSound from 'use-sound'
 import confetti from 'canvas-confetti'
+import ModalGetStart from '../../components/ModalGetStart'
+import Timer from '../../components/Timer'
 
 const cards = [
     // {
@@ -53,12 +55,28 @@ const Flipcard = () => {
     const [flippedCards, setFlippedCards] = useState([])
     const [round, setRound] = useState(1)
     const [cardList, setCardList] = useState([])
+    const [isModalGetStart, setIsModalGetStart] = useState(true)
     const [isModalNextRound, setIsModalNextRound] = useState(false)
+    const [time, setTime] = useState(0)
+    const [start, setStart] = useState(false)
+
     const [playOn] = useSound('/assets/sound/pop-up-on.mp3')
     const [playOff] = useSound('/assets/sound/pop-up-off.mp3')
     const [playCorrect] = useSound('/assets/sound/correct-answer.mp3')
     const [playCongrat] = useSound('/assets/sound/congrat.mp3')
-    const [minHeight, setMinHeight] = useState('800px')
+
+    const startTimer = () => {
+        setStart(true)
+    }
+
+    const stopTimer = () => {
+        setStart(false)
+    }
+
+    const resetTimer = () => {
+        setTime(0)
+        setStart(false)
+    }
 
     const handleClick = (name, index) => {
         playOn()
@@ -110,6 +128,7 @@ const Flipcard = () => {
             const newRound = round + 1
             const isNotGameEnd = newRound !== roundData.length + 1
             if (isNotGameEnd) {
+                stopTimer()
                 setRound(newRound)
                 setFlippedCards([])
                 setIsModalNextRound(true)
@@ -130,7 +149,6 @@ const Flipcard = () => {
     }
 
     useEffect(() => {
-        setMinHeight(window.innerHeight)
         if (round !== roundData.length + 1) {
             setCardList(shuffle(getCardData(cards, roundData[round - 1].imgSize)).map((card, index) => {
                 return {
@@ -156,7 +174,7 @@ const Flipcard = () => {
                     </Grid>
                     <Grid>
                         <Text align="center" h6 size={15} color="black">
-                            time : 10.00
+                            time : <Timer  start={start} time={time} setTime={setTime} />
                         </Text>
                     </Grid>
                 </Grid.Container>
@@ -197,8 +215,9 @@ const Flipcard = () => {
                             </Grid>
                         ))}
                     </Grid.Container>
+                    <ModalGetStart visible={isModalGetStart} setVisible={setIsModalGetStart} startTimer={startTimer}/>
                     <ModalNewRound round={round} roundLength={roundData.length} visible={isModalNextRound}
-                                   setVisible={setIsModalNextRound}/>
+                                   setVisible={setIsModalNextRound} startTimer={startTimer}/>
                 </Container>
             </div>
         </>
