@@ -11,7 +11,7 @@ const Congrat = () => {
     const [username, setUsername] = useState(null)
 
     useEffect(() => {
-        setUsername(localStorage.getItem('username'))
+        if (localStorage.getItem('username')) setUsername(localStorage.getItem('username'))
         confetti({
             particleCount: 100,
             spread: 70,
