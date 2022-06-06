@@ -20,13 +20,13 @@ const Account = () => {
                 <Grid xs={12} sm={5}>
                     <ReactCardFlip containerStyle={{width: '100%'}} isFlipped={isFlipped}
                                    flipDirection="horizontal">
-                        <Card cover css={{w: '100%'}}>
+                        {!isFlipped ? <Card cover css={{w: '100%'}}>
                             <Card.Header
                                 blur css={{
                                 position: 'absolute',
                                 bgBlur: '#ffffff',
                                 borderBottom: '$borderWeights$light solid rgba(255, 255, 255, 0.2)',
-                                 zIndex: 1
+                                zIndex: 1
                             }}>
                                 <Col>
                                     <Text size={12} weight="bold" transform="uppercase" color="#ffffffAA">
@@ -81,7 +81,8 @@ const Account = () => {
                                     </Col>
                                 </Row>
                             </Card.Footer>
-                        </Card>
+                        </Card> : <></>
+                        }
                         <>
                             <Row>
                                 <Col>
