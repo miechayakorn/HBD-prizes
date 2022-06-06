@@ -18,12 +18,6 @@ const Games = () => {
         setLeader(data.result)
     }
 
-    const isOpenGame = () => {
-        const d1 = new Date('06/06/2022')
-        const d2 = new Date()
-        return !(d2.getTime() >= d1.getTime())
-    }
-
     return (
         <>
             <TopNav/>
@@ -37,7 +31,7 @@ const Games = () => {
 
                 <div className={styles.description}>
                     <Grid>
-                        <Button disabled={isOpenGame()} color="warning" onClick={() => Router.push('/games/flipcard')}>Flip
+                        <Button color="warning" onClick={() => Router.push('/games/flipcard')}>Flip
                             Card</Button>
                         <Text css={{pt: '5px'}}>Tap To Play!</Text>
                     </Grid>
