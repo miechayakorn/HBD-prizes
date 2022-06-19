@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { Button, Card, Col, Grid, Row, Table, Text } from '@nextui-org/react'
+import axios from 'axios'
+import { Button, Card, Col, Grid, Link, Row, Table, Text } from '@nextui-org/react'
 import ReactCardFlip from 'react-card-flip'
 import TopNav from '../components/TopNav'
 import styles from '../styles/Home.module.css'
@@ -7,9 +8,17 @@ import { StyledBadge } from '../components/StyledBadge'
 
 const Account = () => {
     const [username, setUsername] = useState(null)
+    const [myRewards, setMyReward] = useState([])
     const [isFlipped, setIsFlipped] = useState(false)
 
+    const fetchMyReward = async () => {
+        const uid = localStorage.getItem('uid')
+        const {data} = await axios.post('/api/account/reward', {uid})
+        setMyReward(data)
+    }
+
     useEffect(() => {
+        fetchMyReward()
         setUsername(localStorage.getItem('username'))
     }, [])
 
@@ -29,9 +38,11 @@ const Account = () => {
                                 zIndex: 1
                             }}>
                                 <Col>
-                                    <Text size={12} weight="bold" transform="uppercase" color="#ffffffAA">
-                                        New (0 items)
-                                    </Text>
+                                    <div className="waveTextAnimated">
+                                        <Text size={12} weight="bold" transform="uppercase">
+                                            New ({myRewards.length} items)
+                                        </Text>
+                                    </div>
                                     <Text h3 color="#7828c8">
                                         {username}
                                     </Text>
@@ -39,7 +50,7 @@ const Account = () => {
                             </Card.Header>
                             <Card.Body>
                                 <Card.Image
-                                    src="https://nextui.org/images/card-example-6.jpeg"
+                                    src="/assets/img/bg-reward.webp"
                                     height={400}
                                     width="100%"
                                     alt="Card example background"
@@ -106,18 +117,27 @@ const Account = () => {
                                             <Table.Column>ACTION</Table.Column>
                                         </Table.Header>
                                         <Table.Body>
-                                            <Table.Row key="0">
-                                                <Table.Cell>NO DATA</Table.Cell>
-                                                <Table.Cell>
-                                                    <StyledBadge type={'vacation'}>Close</StyledBadge>
-                                                </Table.Cell>
-                                            </Table.Row>
-                                            {/*<Table.Row key="1">*/}
-                                            {/*    <Table.Cell>MOBILE TOPUP 20BAHT</Table.Cell>*/}
-                                            {/*    <Table.Cell>*/}
-                                            {/*        <StyledBadge type={'active'}>Click Link</StyledBadge>*/}
-                                            {/*    </Table.Cell>*/}
-                                            {/*</Table.Row>*/}
+                                            {
+                                                myRewards.length === 0 ?
+                                                    <Table.Row key="0">
+                                                        <Table.Cell>NO DATA</Table.Cell>
+                                                        <Table.Cell>
+                                                            <StyledBadge type={'vacation'}>Close</StyledBadge>
+                                                        </Table.Cell>
+                                                    </Table.Row>
+                                                    :
+                                                    (myRewards.map((reward, index) => {
+                                                        return <Table.Row key={index}>
+                                                            <Table.Cell>{reward.name}</Table.Cell>
+                                                            <Table.Cell>
+                                                                <Link href={reward.detail} target="_blank">
+                                                                    <StyledBadge
+                                                                        type={'active'}>{reward.action}</StyledBadge>
+                                                                </Link>
+                                                            </Table.Cell>
+                                                        </Table.Row>
+                                                    }))
+                                            }
                                         </Table.Body>
                                         <Table.Pagination
                                             shadow
