@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
-import { Button, Card, Col, Grid, Link, Row, Table, Text } from '@nextui-org/react'
+import { Button, Card, Col, Grid, Link, Popover, Row, Table, Text } from '@nextui-org/react'
 import ReactCardFlip from 'react-card-flip'
+import copy from 'copy-to-clipboard'
 import TopNav from '../components/TopNav'
 import styles from '../styles/Home.module.css'
 import { StyledBadge } from '../components/StyledBadge'
@@ -129,12 +130,35 @@ const Account = () => {
                                                     (myRewards.map((reward, index) => {
                                                         return <Table.Row key={index}>
                                                             <Table.Cell>{reward.name}</Table.Cell>
-                                                            <Table.Cell>
-                                                                <Link href={reward.detail} target="_blank">
-                                                                    <StyledBadge
-                                                                        type={'active'}>{reward.action}</StyledBadge>
-                                                                </Link>
-                                                            </Table.Cell>
+                                                            {reward.action === 'copy' ?
+                                                                <Table.Cell>
+                                                                    <Row>
+                                                                        {reward.detail}
+                                                                        <Popover>
+                                                                            <Popover.Trigger>
+                                                                                <Button css={{ml: '2px'}} size="xs" auto flat
+                                                                                        onClick={() => {
+                                                                                            copy(reward.detail)
+                                                                                        }}>
+                                                                                    <Text css={{color: 'inherit'}}
+                                                                                          weight="bold">{reward.action}</Text>
+                                                                                </Button>
+                                                                            </Popover.Trigger>
+                                                                            <Popover.Content>
+                                                                                <Text size={12}
+                                                                                      css={{p: '$4'}}>Copied!</Text>
+                                                                            </Popover.Content>
+                                                                        </Popover>
+                                                                    </Row>
+                                                                </Table.Cell>
+                                                                :
+                                                                <Table.Cell>
+                                                                    <Link href={reward.detail} target="_blank">
+                                                                        <StyledBadge
+                                                                            type={'active'}>{reward.action}</StyledBadge>
+                                                                    </Link>
+                                                                </Table.Cell>
+                                                            }
                                                         </Table.Row>
                                                     }))
                                             }
