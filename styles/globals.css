@@ -59,3 +59,24 @@ a {
     color: #564a5f;
     text-shadow: #bfbaff 4px 4px, #ffdef7 8px 8px;
 }
+
+.blob {
+    background: black;
+    color: white;
+    height: 45px;
+    animation: pulse 3s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgb(0, 0, 0);
+    }
+
+    70% {
+        box-shadow: 0 0 0 20px rgba(0, 0, 0, 0);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+    }
+}
